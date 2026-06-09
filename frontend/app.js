@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const goDashboardBtn = document.getElementById('go-dashboard-btn');
     const dashBackBtn = document.getElementById('dash-back-btn');
     const dashboardContent = document.getElementById('dashboard-content');
+    const downloadDashboardBtn = document.getElementById('download-dashboard-btn');
     
     const backBtn = document.getElementById('back-btn');
     const resetBtn = document.getElementById('reset-btn');
@@ -130,6 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Dashboard Navigation
+    let currentDashboardData = [];
+
     const openDashboard = async (e) => {
         if(e) e.preventDefault();
         const t = localStorage.getItem('token');
@@ -150,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (!res.ok) throw new Error('Failed to fetch history');
             const data = await res.json();
+            currentDashboardData = data;
             
             if (data.length === 0) {
                 dashboardContent.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No grades recorded yet.</p>';
@@ -215,6 +219,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(dashBackBtn) dashBackBtn.addEventListener('click', () => {
         switchSection(dashboardSection, setupSection);
+    });
+
+    if(downloadDashboardBtn) downloadDashboardBtn.addEventListener('click', () => {
+        if (!currentDashboardData || currentDashboardData.length === 0) {
+            alert('No data to download.');
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        doc.setFontSize(18);
+        doc.text("Grade History Report", 14, 22);
+        doc.setFontSize(11);
+        doc.setTextColor(100);
+        
+        const tableColumn = ["S.No", "Roll No", "Subjects", "Total Marks", "Percent", "Grade", "Subject Breakdown"];
+        const tableRows = [];
+
+        // Sort data by roll number sequentially
+        const sortedData = [...currentDashboardData].sort((a, b) => a.rollNumber.localeCompare(b.rollNumber));
+
+        sortedData.forEach((item, index) => {
+            const breakdownData = item.subjectBreakdown 
+                ? item.subjectBreakdown.split('|').map(s => s.trim()).filter(s => s).join('\n') 
+                : '';
+                
+            const rowData = [
+                index + 1,
+                item.rollNumber,
+                item.totalSubjects,
+                item.totalMarks.toFixed(2),
+                item.averagePercentage.toFixed(2) + '%',
+                item.grade,
+                breakdownData
+            ];
+            tableRows.push(rowData);
+        });
+
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: 30,
+            styles: { fontSize: 8, cellPadding: 3, valign: 'middle' },
+            columnStyles: { 
+                0: { cellWidth: 12, halign: 'center' },
+                1: { cellWidth: 25 },
+                6: { cellWidth: 65 } 
+            },
+            theme: 'grid',
+            headStyles: { fillColor: [16, 185, 129] }
+        });
+
+        doc.save('grade_history.pdf');
     });
 
     function getGradeColorStr(grade) {

@@ -134,8 +134,11 @@
 
             <!-- Dashboard Section -->
             <section id="dashboard-section" class="card hidden">
-                <button type="button" class="back-btn" id="dash-back-btn">⬅ Back to Calculator</button>
-                <h2>Your Grade History</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <button type="button" class="back-btn" id="dash-back-btn" style="margin: 0;">⬅ Back to Calculator</button>
+                    <button type="button" class="primary-btn outline" id="download-dashboard-btn" style="width: auto; margin: 0; padding: 0.4rem 0.8rem; font-size: 0.9rem;">⬇ Download PDF</button>
+                </div>
+                <h2 style="margin-top: 0;">Your Grade History</h2>
                 <div id="dashboard-content">
                     <p style="text-align: center; color: var(--text-secondary);">Loading your data...</p>
                 </div>
@@ -143,6 +146,10 @@
         </main>
     </div>
 
-    <script src="app.js?v=2"></script>
+    <!-- jsPDF for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    
+    <script src="app.js?v=3"></script>
 </body>
 </html>
