@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grade Tracker Pro</title>
+    <meta name="description" content="A premium dynamic grade tracking application.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-animation"></div>
+    <div class="container">
+        <header style="position: relative;">
+            <h1>Grade Tracker <span class="highlight">Pro</span></h1>
+            <p>Enter your details and subjects to calculate your final grade seamlessly.</p>
+            <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1rem;">
+                <button id="logout-btn" class="primary-btn outline" style="width: auto; padding: 0.5rem 1rem; margin: 0; display: none; font-size: 0.9rem;">Logout</button>
+                <button id="dashboard-btn" class="primary-btn outline" style="width: auto; padding: 0.5rem 1rem; margin: 0; display: none; font-size: 0.9rem;">Dashboard</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Auth Login Section -->
+            <section id="login-section" class="card active">
+                <h2>Welcome Back</h2>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="primary-btn" id="login-btn">Login</button>
+                    <p style="text-align: center; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        Don't have an account? <a href="#" id="go-to-register" style="color: var(--primary-color);">Register here</a>
+                    </p>
+                </form>
+            </section>
+
+            <!-- Auth Register Section -->
+            <section id="register-section" class="card hidden">
+                <h2>Create Account</h2>
+                <form id="register-form">
+                    <div class="input-group">
+                        <label for="reg-username">Username</label>
+                        <input type="text" id="reg-username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" required>
+                    </div>
+                    <button type="submit" class="primary-btn" id="register-btn">Register</button>
+                    <p style="text-align: center; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        Already have an account? <a href="#" id="go-to-login" style="color: var(--primary-color);">Login here</a>
+                    </p>
+                </form>
+            </section>
+
+            <!-- Step 1: Initial Info -->
+            <section id="setup-section" class="card hidden">
+                <h2>Student Information</h2>
+                <form id="setup-form">
+                    <div class="input-group">
+                        <label for="rollNumber">Roll Number</label>
+                        <input type="text" id="rollNumber" placeholder="e.g., 2023CS01" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="totalSubjects">Total Subjects</label>
+                        <input type="number" id="totalSubjects" placeholder="e.g., 5" min="1" max="15" required>
+                    </div>
+                    <button type="submit" class="primary-btn">Next Step ➔</button>
+                </form>
+            </section>
+
+            <!-- Step 2: Subjects Entry -->
+            <section id="subjects-section" class="card hidden">
+                <button type="button" class="back-btn" id="back-btn">⬅ Back</button>
+                <h2>Enter Subject Marks</h2>
+                <form id="subjects-form">
+                    <div id="subjects-container" class="subjects-grid">
+                        <!-- Dynamic inputs will be injected here -->
+                    </div>
+                    <button type="submit" class="primary-btn calculate-btn">Calculate Grade ✨</button>
+                </form>
+            </section>
+
+            <!-- Step 3: Results -->
+            <section id="results-section" class="card hidden">
+                <h2>Result Summary</h2>
+                <div class="result-details">
+                    <div class="result-item">
+                        <span class="label">Roll Number</span>
+                        <span class="value" id="res-roll">---</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Total Marks</span>
+                        <span class="value" id="res-total">---</span>
+                    </div>
+                    <div class="result-item" id="percent-item">
+                        <span class="label" id="percent-label">Percentage</span>
+                        <span class="value" id="res-percent">---</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="label">Average Score</span>
+                        <span class="value" id="res-avg">---</span>
+                    </div>
+                    <div class="result-item" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);">
+                        <span class="label" style="color: #10b981;">Highest Score</span>
+                        <span class="value" id="res-high">---</span>
+                    </div>
+                    <div class="result-item" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2);">
+                        <span class="label" style="color: #ef4444;">Lowest Score</span>
+                        <span class="value" id="res-low">---</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-size: 1.2rem;">Subject Breakdown</h3>
+                <div class="subjects-grid" id="res-subjects-list" style="max-height: 250px; margin-bottom: 1.5rem; gap: 0.5rem;">
+                    <!-- Individual subjects will be appended here -->
+                </div>
+                
+                <div class="final-grade-container">
+                    <h3>Final Grade</h3>
+                    <div class="grade-badge" id="res-grade">?</div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <button type="button" class="primary-btn outline" id="reset-btn" style="margin-top: 0;">Calculate Another</button>
+                    <button type="button" class="primary-btn" id="go-dashboard-btn" style="margin-top: 0; background: #10b981;">View Dashboard</button>
+                </div>
+            </section>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="card hidden">
+                <button type="button" class="back-btn" id="dash-back-btn">⬅ Back to Calculator</button>
+                <h2>Your Grade History</h2>
+                <div id="dashboard-content">
+                    <p style="text-align: center; color: var(--text-secondary);">Loading your data...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js?v=2"></script>
+</body>
+</html>
