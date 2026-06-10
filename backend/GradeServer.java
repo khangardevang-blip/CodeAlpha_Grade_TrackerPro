@@ -91,7 +91,8 @@ public class GradeServer {
 
     public static void main(String[] args) throws IOException {
         initDatabase();
-        int port = 8080;
+        String portEnv = System.getenv("PORT");
+        int port = (portEnv != null) ? Integer.parseInt(portEnv) : 8080;
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/api/auth/register", new AuthRegisterHandler());
         server.createContext("/api/auth/login", new AuthLoginHandler());
