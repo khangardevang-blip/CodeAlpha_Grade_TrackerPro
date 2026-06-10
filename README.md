@@ -23,10 +23,12 @@ A full-stack, cloud-ready web application designed to calculate, track, and mana
 * MySQL (via JDBC)
 * Docker
 
-
 ### Running the Frontend
 1. Open a new terminal and navigate to the `frontend` directory.
-2. Start a simple vercel server.
+2. Start a simple local server (e.g., using Python):
+   ```bash
+   python -m http.server 3000
+   ```
 3. Open your browser and go to `https://code-alpha-grade-tracker-pro.vercel.app/`.
 
 ## ☁️ Deployment
