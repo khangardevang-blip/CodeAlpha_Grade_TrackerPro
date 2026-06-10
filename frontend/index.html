@@ -21,7 +21,7 @@
         </header>
 
         <main>
-            <!-- Auth Login Section -->
+            
             <section id="login-section" class="card active">
                 <h2>Welcome Back</h2>
                 <form id="login-form">
@@ -40,7 +40,7 @@
                 </form>
             </section>
 
-            <!-- Auth Register Section -->
+            
             <section id="register-section" class="card hidden">
                 <h2>Create Account</h2>
                 <form id="register-form">
@@ -59,7 +59,7 @@
                 </form>
             </section>
 
-            <!-- Step 1: Initial Info -->
+            
             <section id="setup-section" class="card hidden">
                 <h2>Student Information</h2>
                 <form id="setup-form">
@@ -75,19 +75,19 @@
                 </form>
             </section>
 
-            <!-- Step 2: Subjects Entry -->
+        
             <section id="subjects-section" class="card hidden">
                 <button type="button" class="back-btn" id="back-btn">⬅ Back</button>
                 <h2>Enter Subject Marks</h2>
                 <form id="subjects-form">
                     <div id="subjects-container" class="subjects-grid">
-                        <!-- Dynamic inputs will be injected here -->
+                        
                     </div>
                     <button type="submit" class="primary-btn calculate-btn">Calculate Grade ✨</button>
                 </form>
             </section>
 
-            <!-- Step 3: Results -->
+            
             <section id="results-section" class="card hidden">
                 <h2>Result Summary</h2>
                 <div class="result-details">
@@ -119,7 +119,7 @@
                 
                 <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-size: 1.2rem;">Subject Breakdown</h3>
                 <div class="subjects-grid" id="res-subjects-list" style="max-height: 250px; margin-bottom: 1.5rem; gap: 0.5rem;">
-                    <!-- Individual subjects will be appended here -->
+                    
                 </div>
                 
                 <div class="final-grade-container">
@@ -132,7 +132,7 @@
                 </div>
             </section>
 
-            <!-- Dashboard Section -->
+            
             <section id="dashboard-section" class="card hidden">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <button type="button" class="back-btn" id="dash-back-btn" style="margin: 0;">⬅ Back to Calculator</button>
@@ -146,7 +146,7 @@
         </main>
     </div>
 
-    <!-- jsPDF for PDF Generation -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     

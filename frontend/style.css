@@ -30,7 +30,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Background Animated Gradient Mesh */
+
 .background-animation {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -75,7 +75,7 @@ header p {
     font-size: 1rem;
 }
 
-/* Cards (Glassmorphism) */
+
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(12px);
@@ -101,7 +101,7 @@ header p {
     color: var(--text-primary);
 }
 
-/* Forms & Inputs */
+
 .input-group {
     margin-bottom: 1.5rem;
     display: flex;
@@ -132,7 +132,7 @@ header p {
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
 }
 
-/* Buttons */
+
 .primary-btn {
     width: 100%;
     background: var(--primary-color);
@@ -178,7 +178,6 @@ header p {
     color: var(--text-primary);
 }
 
-/* Subjects Grid */
 .subjects-grid {
     display: flex;
     flex-direction: column;
@@ -188,7 +187,7 @@ header p {
     padding-right: 0.5rem;
 }
 
-/* Scrollbar styling */
+
 .subjects-grid::-webkit-scrollbar {
     width: 6px;
 }
@@ -213,7 +212,6 @@ header p {
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* Results section */
 .result-details {
     display: grid;
     gap: 1rem;
@@ -269,7 +267,7 @@ header p {
     to { transform: scale(1); opacity: 1; }
 }
 
-/* Responsive */
+
 @media (max-width: 480px) {
     .subject-row {
         grid-template-columns: 1fr;
@@ -277,7 +275,7 @@ header p {
     }
 }
 
-/* Dashboard Styles */
+
 .dashboard-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--card-border);

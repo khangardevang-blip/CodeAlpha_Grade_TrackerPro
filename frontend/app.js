@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elements
+    
     const loginSection = document.getElementById('login-section');
     const registerSection = document.getElementById('register-section');
     const setupSection = document.getElementById('setup-section');
@@ -27,14 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const subjectsContainer = document.getElementById('subjects-container');
     
-    // State
+    
     let studentData = {
         rollNumber: '',
         totalSubjects: 0,
         subjects: []
     };
     
-    // Auth Initialization
+    
     const token = localStorage.getItem('token');
     if (token) {
         switchSection(loginSection, setupSection);
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(dashboardBtn) dashboardBtn.style.display = 'block';
     }
     
-    // Auth Toggles
+    
     goToRegister.addEventListener('click', (e) => {
         e.preventDefault();
         switchSection(loginSection, registerSection);
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         switchSection(registerSection, loginSection);
     });
     
-    // Logout
+ 
     if(logoutBtn) logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('token');
         logoutBtn.style.display = 'none';
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Login
+    
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('login-btn');
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Register
+  
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('register-btn');
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Dashboard Navigation
+    
     let currentDashboardData = [];
 
     const openDashboard = async (e) => {
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tableColumn = ["S.No", "Roll No", "Subjects", "Total Marks", "Percent", "Grade", "Subject Breakdown"];
         const tableRows = [];
 
-        // Sort data by roll number sequentially
+       
         const sortedData = [...currentDashboardData].sort((a, b) => a.rollNumber.localeCompare(b.rollNumber));
 
         sortedData.forEach((item, index) => {
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Step 1: Submit Setup Form
+   
     setupForm.addEventListener('submit', (e) => {
         e.preventDefault();
         studentData.rollNumber = document.getElementById('rollNumber').value.trim();
@@ -299,12 +299,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Step 2: Go Back
+    
     backBtn.addEventListener('click', () => {
         switchSection(subjectsSection, setupSection);
     });
     
-    // Step 3: Submit Subjects
+    
     subjectsForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Gather subjects
+        
         studentData.subjects = [];
         let hasError = false;
         
@@ -337,13 +337,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (hasError) return;
         
-        // Show loading state
+   
         const originalBtnText = calculateBtn.innerHTML;
         calculateBtn.innerHTML = 'Calculating...';
         calculateBtn.disabled = true;
         
         try {
-            // Call Java API
+            
             const response = await fetch('https://codealpha-grade-trackerpro.onrender.com/api/grades/calculate', {
                 method: 'POST',
                 headers: {
@@ -377,26 +377,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Step 4: Reset
+    
     resetBtn.addEventListener('click', () => {
         setupForm.reset();
         subjectsForm.reset();
         switchSection(resultsSection, setupSection);
     });
     
-    // Utility: Switch Section
+   
     function switchSection(from, to) {
         from.classList.add('hidden');
         from.classList.remove('active');
         
         to.classList.remove('hidden');
-        // Small delay to allow CSS display to apply before opacity transition
+        
         setTimeout(() => {
             to.classList.add('active');
         }, 50);
     }
     
-    // Utility: Generate Inputs
+   
     function generateSubjectInputs(count) {
         subjectsContainer.innerHTML = '';
         for (let i = 1; i <= count; i++) {
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Utility: Display Results
+   
     function displayResults(data) {
         document.getElementById('res-roll').textContent = data.rollNumber;
         document.getElementById('res-total').textContent = data.totalMarks.toFixed(2);
@@ -425,7 +425,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('res-high').textContent = data.highestScore.toFixed(2);
         document.getElementById('res-low').textContent = data.lowestScore.toFixed(2);
 
-        // Color code the percentage block
         const percentItem = document.getElementById('percent-item');
         const percentLabel = document.getElementById('percent-label');
         let pColorStr = '';
@@ -446,7 +445,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const gradeBadge = document.getElementById('res-grade');
         gradeBadge.textContent = data.grade;
         
-        // Populate subject breakdown
         const subjectsList = document.getElementById('res-subjects-list');
         subjectsList.innerHTML = '';
         if (data.subjects && data.subjects.length > 0) {
@@ -455,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 subItem.className = 'result-item';
                 subItem.style.padding = '0.75rem';
                 
-                // Get color for individual subject grade
+    
                 let subColor = 'rgba(255,255,255,0.1)';
                 switch(sub.grade) {
                     case 'A+': subColor = 'linear-gradient(135deg, #10b981, #059669)'; break;
@@ -478,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // Dynamically change badge color based on final grade
+        
         let colors = '';
         switch(data.grade) {
             case 'A+': colors = 'linear-gradient(135deg, #10b981, #059669)'; break;
@@ -491,9 +489,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         gradeBadge.style.background = colors;
         
-        // Re-trigger animation
         gradeBadge.style.animation = 'none';
-        gradeBadge.offsetHeight; /* trigger reflow */
+        gradeBadge.offsetHeight; 
         gradeBadge.style.animation = null; 
     }
 });
