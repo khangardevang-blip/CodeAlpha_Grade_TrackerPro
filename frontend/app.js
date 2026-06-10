@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = 'Wait...';
         
         try {
-            const res = await fetch('http://localhost:8080/api/auth/login', {
+            const res = await fetch('https://codealpha-grade-trackerpro.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = 'Wait...';
         
         try {
-            const res = await fetch('http://localhost:8080/api/auth/register', {
+            const res = await fetch('https://codealpha-grade-trackerpro.onrender.com/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dashboardContent.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Loading your data...</p>';
 
         try {
-            const res = await fetch('http://localhost:8080/api/grades/history', {
+            const res = await fetch('https://codealpha-grade-trackerpro.onrender.com/api/grades/history', {
                 headers: { 'Authorization': `Bearer ${t}` }
             });
             if (!res.ok) throw new Error('Failed to fetch history');
