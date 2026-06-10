@@ -54,6 +54,33 @@ public class GradeServer {
         if (dbUrl == null || dbUrl.isEmpty()) {
             return null;
         }
+
+        // Auto-convert standard "mysql://user:pass@host:port/db" to JDBC format
+        if (dbUrl.startsWith("mysql://")) {
+            try {
+                java.net.URI uri = new java.net.URI(dbUrl);
+                String userInfo = uri.getUserInfo();
+                String user = "";
+                String pass = "";
+                if (userInfo != null) {
+                    String[] parts = userInfo.split(":", 2);
+                    user = parts.length > 0 ? parts[0] : "";
+                    pass = parts.length > 1 ? parts[1] : "";
+                }
+                String query = uri.getQuery() != null ? "&" + uri.getQuery() : "";
+                dbUrl = "jdbc:mysql://" + uri.getHost() + ":" + (uri.getPort() == -1 ? 3306 : uri.getPort()) 
+                        + uri.getPath() + "?user=" + user + "&password=" + pass + query;
+            } catch (Exception e) {
+                System.err.println("Failed to parse DATABASE_URL: " + e.getMessage());
+            }
+        }
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.err.println("MySQL driver not found in classpath!");
+        }
+
         return DriverManager.getConnection(dbUrl);
     }
 
