@@ -125,12 +125,12 @@ public class GradeServer {
         server.createContext("/api/auth/login", new AuthLoginHandler());
         server.createContext("/api/grades/calculate", new GradeHandler());
         server.createContext("/api/grades/history", new HistoryHandler());
-        server.setExecutor(null); // creates a default executor
+        server.setExecutor(null); 
         server.start();
         System.out.println("Server started on port " + port);
     }
 
-    // --- Utility Methods ---
+    
 
     private static String hashPassword(String password) {
         try {
