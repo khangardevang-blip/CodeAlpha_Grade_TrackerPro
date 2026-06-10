@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         try {
             // Call Java API
-            const response = await fetch('http://localhost:8080/api/grades/calculate', {
+            const response = await fetch('https://codealpha-grade-trackerpro.onrender.com/api/grades/calculate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
