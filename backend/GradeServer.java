@@ -55,21 +55,21 @@ public class GradeServer {
             return null;
         }
 
-        // Auto-convert standard "mysql://user:pass@host:port/db" to JDBC format
+        // Auto-convert standard "mysql://user:pass@host:port/db" to JDBC format robustly
         if (dbUrl.startsWith("mysql://")) {
             try {
-                java.net.URI uri = new java.net.URI(dbUrl);
-                String userInfo = uri.getUserInfo();
-                String user = "";
-                String pass = "";
-                if (userInfo != null) {
-                    String[] parts = userInfo.split(":", 2);
-                    user = parts.length > 0 ? parts[0] : "";
-                    pass = parts.length > 1 ? parts[1] : "";
+                String temp = dbUrl.substring(8);
+                int atIdx = temp.indexOf('@');
+                if (atIdx != -1) {
+                    String credentials = temp.substring(0, atIdx);
+                    String hostPortDb = temp.substring(atIdx + 1);
+                    
+                    int colonIdx = credentials.indexOf(':');
+                    String user = colonIdx != -1 ? credentials.substring(0, colonIdx) : credentials;
+                    String pass = colonIdx != -1 ? credentials.substring(colonIdx + 1) : "";
+                    
+                    dbUrl = "jdbc:mysql://" + hostPortDb + (hostPortDb.contains("?") ? "&" : "?") + "user=" + user + "&password=" + pass;
                 }
-                String query = uri.getQuery() != null ? "&" + uri.getQuery() : "";
-                dbUrl = "jdbc:mysql://" + uri.getHost() + ":" + (uri.getPort() == -1 ? 3306 : uri.getPort()) 
-                        + uri.getPath() + "?user=" + user + "&password=" + pass + query;
             } catch (Exception e) {
                 System.err.println("Failed to parse DATABASE_URL: " + e.getMessage());
             }
