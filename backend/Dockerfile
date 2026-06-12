@@ -2,8 +2,8 @@ FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 COPY . .
 
-# Download the MySQL JDBC Driver so the server can talk to the database
-RUN curl -o mysql-connector.jar https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.4.0/mysql-connector-j-8.4.0.jar
+# Download the MySQL JDBC Driver using Docker's native ADD command
+ADD https://repo1.maven.org/maven2/com/mysql/mysql-connector-j/8.4.0/mysql-connector-j-8.4.0.jar mysql-connector.jar
 
 # Compile the Java file
 RUN javac GradeServer.java
